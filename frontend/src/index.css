@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-cream: #F8F6EF;
+    --bg-linen: #FFFDF8;
+    --primary: #124B3A;
+    --secondary: #1F7A5A;
+    --accent: #E76F51;
+    --highlight: #E9A23B;
+    --text-dark: #17221C;
+    --text-muted: #65736B;
+    --border-color: #DDE5DC;
+  }
+
+  body {
+    background-color: #F8F6EF;
+    color: #17221C;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom subtle scrollbar with approved palette */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F8F6EF;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C8D4C7;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1F7A5A;
+  }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Medical Report Print Media Styles */
+@page {
+  size: A4 portrait;
+  margin: 8mm 10mm;
+}
+
+@media print {
+  /* ── Step 1: Global reset for print ── */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #17221C !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Reset hardware acceleration and transforms that break paged layout */
+  #root,
+  main,
+  .gpu-layer,
+  [data-framer-name] {
+    transform: none !important;
+    perspective: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ── Step 2: Hide standard UI components ── */
+  aside,
+  nav,
+  header,
+  footer,
+  .no-print,
+  button.no-print,
+  [data-no-print="true"],
+  .custom-cursor,
+  .floating-journey-dock {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* ── Step 3: Clean modal backdrop handling during print ── */
+  .fixed:has(.printable-sheet) {
+    position: static !important;
+    inset: auto !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    z-index: auto !important;
+  }
+
+  /* ── Step 4: Format printable sheets to fit seamlessly on a single page ── */
+  .printable-sheet,
+  .single-page-sheet {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+    box-shadow: none !important;
+    border: 1px solid #DDE5DC !important;
+    border-radius: 12px !important;
+    padding: 14px 18px !important;
+    margin: 0 auto !important;
+    background: #FFFFFF !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* Tighten spacing inside printable sheet for single-page budget */
+  .printable-sheet .space-y-6 > * + * {
+    margin-top: 10px !important;
+  }
+  .printable-sheet .space-y-5 > * + * {
+    margin-top: 8px !important;
+  }
+  .printable-sheet .space-y-4 > * + * {
+    margin-top: 6px !important;
+  }
+  .printable-sheet .p-6,
+  .printable-sheet .p-8 {
+    padding: 12px 16px !important;
+  }
+
+  /* Ensure overflow containers don't clip content */
+  .overflow-y-auto,
+  .overflow-hidden,
+  .overflow-x-auto {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  /* ReportsPage canvas container */
+  .print-container {
+    box-shadow: none !important;
+    border: 1px solid #DDE5DC !important;
+    padding: 14px 18px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
+/* Glassmorphism tuned for warm ivory */
+.glass-ivory {
+  background: rgba(255, 253, 248, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(221, 229, 220, 0.9);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #DDE5DC;
+}
+
+.retina-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(18, 75, 58, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 75, 58, 0.04) 1px, transparent 1px);
+}
+
+.retina-radial-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(31, 122, 90, 0.08) 0%, rgba(231, 111, 81, 0.04) 45%, transparent 75%);
+}
+
+/* ─── Premium Motion Design Classes & Keyframes ─── */
+
+/* 1. Subtle, Medical-Grade Card Hover Motion */
+.motion-card {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, box-shadow;
+}
+
+.motion-card:hover {
+  transform: translateY(-4px) scale(1.008);
+  box-shadow: 0 12px 28px -6px rgba(18, 75, 58, 0.08), 0 4px 12px -2px rgba(18, 75, 58, 0.04);
+}
+
+/* 2. Soft Medical Glow Utilities (No Blue) */
+.glow-forest {
+  box-shadow: 0 0 20px -2px rgba(18, 75, 58, 0.25);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px -2px rgba(31, 122, 90, 0.28);
+}
+
+.glow-saffron {
+  box-shadow: 0 0 20px -2px rgba(233, 162, 59, 0.3);
+}
+
+.glow-coral {
+  box-shadow: 0 0 20px -2px rgba(231, 111, 81, 0.3);
+}
+
+/* 3. Physiological Retinal Breathing Pulse */
+@keyframes retinal-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 12px rgba(31, 122, 90, 0.15));
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+    filter: drop-shadow(0 0 24px rgba(31, 122, 90, 0.28));
+  }
+}
+
+.animate-retinal-breathe {
+  animation: retinal-breathe 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity, filter;
+}
+
+/* 4. Scanning Radar Ring */
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+}
+
+.animate-ring-pulse {
+  animation: ring-pulse 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 5. Vessel Flow & Laser Sweep */
+@keyframes vessel-flow {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-vessel-flow {
+  stroke-dasharray: 8 16;
+  animation: vessel-flow 12s linear infinite;
+}
+
+@keyframes laser-sweep-vertical {
+  0% {
+    top: 0%;
+    opacity: 0.2;
+  }
+  50% {
+    top: 96%;
+    opacity: 0.85;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.2;
+  }
+}
+
+.animate-laser-sweep-v {
+  animation: laser-sweep-vertical 3.6s ease-in-out infinite;
+  will-change: top, opacity;
+}
+
+/* 6. Hardware-Accelerated Page Container */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* 7. Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-card:hover {
+    transform: none !important;
+  }
+
+  .animate-retinal-breathe,
+  .animate-ring-pulse,
+  .animate-vessel-flow,
+  .animate-laser-sweep-v {
+    animation: none !important;
+  }
+}
